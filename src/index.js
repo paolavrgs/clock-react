@@ -1,12 +1,29 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import { render } from 'react-dom';
+import ClockUI from './ClockUI';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+class ClockSetup extends React.Component {
+  state = {
+    time: new Date()
+  }
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+  componentDidMount() {
+    setInterval(() => {
+      this.tick()
+    }, 1000)
+  }
+
+  tick() {
+    this.setState({
+      time: new Date()
+    })
+  }
+  
+  render() {
+    return (
+      <ClockUI time={this.state.time.toLocaleTimeString()}/>
+    );
+  }
+}
+
+render(<ClockSetup/>, document.getElementById('root'))
